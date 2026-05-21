@@ -72,8 +72,9 @@ cd "$BACKEND_DIR"
 python3 << 'PYEOF'
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-from app.models import init_db
-init_db()
+import asyncio
+from app.database import init_db
+asyncio.run(init_db())
 print("✓ Database ready")
 PYEOF
 echo ""
