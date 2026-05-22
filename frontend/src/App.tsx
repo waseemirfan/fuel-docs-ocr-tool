@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <BrowserRouter basename="/fuel-docs-ocr-tool">
         <div className="min-h-screen bg-gray-50">
           <Navbar />
           <main>

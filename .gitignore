@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Environment / Secrets — NEVER commit these
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# SQLite database (contains uploaded data)
+*.db
+*.sqlite
+*.sqlite3
+backend/data/
+
+# Uploaded files
+backend/uploads/
+
+# Node
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Python bytecode in subdirs
+**/__pycache__/
+**/*.pyc

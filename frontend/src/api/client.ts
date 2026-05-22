@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Document, ReviewSubmit } from "../types";
 
-const api = axios.create({ baseURL: "http://localhost:8000" });
+const api = axios.create({ baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:8000" });
 
 export const uploadDocuments = async (files: File[]): Promise<Document[]> => {
   const form = new FormData();
