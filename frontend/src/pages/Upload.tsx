@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Upload as UploadIcon, FileImage, X, CheckCircle, AlertCircle } from "lucide-react";
 import { uploadDocuments } from "../api/client";
 
-const ACCEPTED = { "image/jpeg": [".jpg", ".jpeg"], "image/png": [".png"], "image/tiff": [".tiff", ".tif"], "image/bmp": [".bmp"] };
+const ACCEPTED = { "image/jpeg": [".jpg", ".jpeg"], "image/png": [".png"], "image/tiff": [".tiff", ".tif"], "image/bmp": [".bmp"], "application/pdf": [".pdf"] };
 
 export default function UploadPage() {
   const [files, setFiles] = useState<File[]>([]);
@@ -37,7 +37,7 @@ export default function UploadPage() {
     <div className="max-w-3xl mx-auto py-10 px-4">
       <h1 className="text-2xl font-bold text-gray-800 mb-1">Upload Documents</h1>
       <p className="text-gray-500 text-sm mb-6">
-        Supported formats: JPG, PNG, TIFF, BMP. Max 20 MB per file.
+        Supported formats: JPG, PNG, TIFF, BMP, PDF. Max 50 MB per file.
         <br />
         Use a multi-document scanner for best results.
       </p>
@@ -51,7 +51,7 @@ export default function UploadPage() {
         <input {...getInputProps()} />
         <UploadIcon className="mx-auto text-gray-400 mb-3" size={40} />
         <p className="text-gray-600 font-medium">
-          {isDragActive ? "Drop files here…" : "Drag & drop images here, or click to browse"}
+          {isDragActive ? "Drop files here…" : "Drag & drop images or PDFs here, or click to browse"}
         </p>
         <p className="text-gray-400 text-xs mt-1">Delivery tickets, Bills of Lading, or combined images</p>
       </div>
