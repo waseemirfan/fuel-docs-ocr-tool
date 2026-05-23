@@ -29,6 +29,16 @@ if errorlevel 1 (
 
 echo [OK] Python found
 
+REM Check Node.js
+node --version >nul 2>&1
+if errorlevel 1 (
+    echo ERROR: Node.js not found.
+    echo Please install Node.js 18+ from https://nodejs.org/
+    pause
+    exit /b 1
+)
+echo [OK] Node.js found
+
 REM Create venv if needed
 if not exist "%VENV_DIR%" (
     echo Creating virtual environment...
@@ -39,17 +49,52 @@ if not exist "%VENV_DIR%" (
 REM Activate venv
 call "%VENV_DIR%\Scripts\activate.bat"
 
-REM Install dependencies
-echo Installing dependencies...
+REM Install Python dependencies
+echo Installing Python dependencies...
 cd /d "%BACKEND_DIR%"
+pip install -q --upgrade pip setuptools wheel
 pip install -q -r requirements.txt
-echo [OK] Dependencies installed
+echo [OK] Python dependencies installed
 
 REM Create .env if missing
 if not exist "%BACKEND_DIR%\.env" (
     echo Creating .env configuration file...
-    copy "%BACKEND_DIR%\.env.example" "%BACKEND_DIR%\.env"
+    if exist "%BACKEND_DIR%\.env.example" (
+        copy "%BACKEND_DIR%\.env.example" "%BACKEND_DIR%\.env"
+    ) else (
+        echo # LLM configuration > "%BACKEND_DIR%\.env"
+        echo LLM_PROVIDER=ollama >> "%BACKEND_DIR%\.env"
+        echo OLLAMA_MODEL=qwen3-vl:8b >> "%BACKEND_DIR%\.env"
+    )
     echo [OK] Generated .env file
+)
+
+REM Build frontend if dist is missing
+if not exist "%FRONTEND_DIR%\dist\index.html" (
+    echo Building frontend...
+    cd /d "%FRONTEND_DIR%"
+    call npm install
+    if errorlevel 1 (
+        echo ERROR: npm install failed.
+        pause
+        exit /b 1
+    )
+    call npm run build
+    if errorlevel 1 (
+        echo ERROR: npm run build failed.
+        pause
+        exit /b 1
+    )
+    echo [OK] Frontend built
+) else (
+    echo [OK] Frontend already built
+)
+
+REM Verify dist exists before serving
+if not exist "%FRONTEND_DIR%\dist\index.html" (
+    echo ERROR: Frontend dist not found after build. Check npm errors above.
+    pause
+    exit /b 1
 )
 
 echo.

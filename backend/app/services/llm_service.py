@@ -19,12 +19,12 @@ import os
 import re
 from pathlib import Path
 
-PROVIDER = os.getenv("LLM_PROVIDER", "gemini").lower()
+PROVIDER = os.getenv("LLM_PROVIDER", "ollama").lower()
 
 # --- Per-provider defaults ---
 PROVIDER_DEFAULTS = {
     "gemini":     {"model": "gemini-2.5-flash", "base_url": "https://generativelanguage.googleapis.com"},
-    "ollama":     {"model": "qwen2.5vl:7b",     "base_url": os.getenv("OLLAMA_HOST", "http://localhost:11434")},
+    "ollama":     {"model": "qwen3-vl:8b",     "base_url": os.getenv("OLLAMA_HOST", "http://localhost:11434")},
     "openrouter": {"model": "google/gemini-2.5-flash", "base_url": "https://openrouter.ai/api/v1"},
 }
 
